@@ -1,6 +1,6 @@
 <?php
 
-namespace Lanos\CashierConnect\Events;
+namespace Ngl5000\CashierConnect\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lanos\CashierConnect\Concerns;
+namespace Ngl5000\CashierConnect\Concerns;
 
 use Exception;
 use Stripe\Collection;
@@ -13,14 +13,15 @@ trait ManageConnectedPaymentMethods
 
     // NOTE: Setup intents are not the recommended way for connected accounts, you should either save the payment for later after taking a payment
     // or set it up using subscriptions and use the returned payment intent api from the first invoice on your frontend element.
-    // For that reason I have no included setup intents in here, you can always write the custom method against the customer model if needed.
+    // For that reason I have not included setup intents in here, you can always write the custom method against the customer model if needed.
 
     /**
      * Returns a list of payment methods for
      * @return Collection
      * @throws ApiErrorException
      */
-    public function getPaymentMethods(){
+    public function getPaymentMethods(): Collection
+    {
         $this->assetCustomerExists();
         return Customer::allPaymentMethods($this->stripeCustomerId(), $this->stripeAccountOptions($this->stripeAccountId()));
     }
@@ -32,7 +33,8 @@ trait ManageConnectedPaymentMethods
      * @throws ApiErrorException
      * @throws Exception
      */
-    public function removePaymentMethod($id){
+    public function removePaymentMethod($id): PaymentMethod
+    {
         $this->assetCustomerExists();
 
         $method = PaymentMethod::retrieve($id, $this->stripeAccountOptions($this->stripeAccountId()));

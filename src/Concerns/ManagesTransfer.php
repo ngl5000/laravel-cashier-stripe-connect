@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Lanos\CashierConnect\Concerns;
+namespace Ngl5000\CashierConnect\Concerns;
 
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Transfer;
@@ -12,7 +12,7 @@ use Stripe\TransferReversal;
 /**
  * Manages transfers for the Stripe connected account.
  *
- * @package Lanos\CashierConnect\Concerns
+ * @package Ngl5000\CashierConnect\Concerns
  */
 trait ManagesTransfer
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lanos\CashierConnect\Models;
+namespace Ngl5000\CashierConnect\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

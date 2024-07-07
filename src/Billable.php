@@ -1,26 +1,26 @@
 <?php
 
-namespace Lanos\CashierConnect;
+namespace Ngl5000\CashierConnect;
 
-use Lanos\CashierConnect\Concerns\CanCharge;
-use Lanos\CashierConnect\Concerns\ManagesAccount;
-use Lanos\CashierConnect\Concerns\ManagesAccountLink;
-use Lanos\CashierConnect\Concerns\ManagesApplePayDomain;
-use Lanos\CashierConnect\Concerns\ManagesBalance;
-use Lanos\CashierConnect\Concerns\ManagesConnectCustomer;
-use Lanos\CashierConnect\Concerns\ManagesConnectProducts;
-use Lanos\CashierConnect\Concerns\ManagesConnectSubscriptions;
-use Lanos\CashierConnect\Concerns\ManagesPaymentLinks;
-use Lanos\CashierConnect\Concerns\ManagesPerson;
-use Lanos\CashierConnect\Concerns\ManagesPayout;
-use Lanos\CashierConnect\Concerns\ManagesTerminals;
-use Lanos\CashierConnect\Concerns\ManagesTransfer;
+use Ngl5000\CashierConnect\Concerns\CanCharge;
+use Ngl5000\CashierConnect\Concerns\ManagesAccount;
+use Ngl5000\CashierConnect\Concerns\ManagesAccountLink;
+use Ngl5000\CashierConnect\Concerns\ManagesApplePayDomain;
+use Ngl5000\CashierConnect\Concerns\ManagesBalance;
+use Ngl5000\CashierConnect\Concerns\ManagesConnectCustomer;
+use Ngl5000\CashierConnect\Concerns\ManagesConnectProducts;
+use Ngl5000\CashierConnect\Concerns\ManagesConnectSubscriptions;
+use Ngl5000\CashierConnect\Concerns\ManagesPaymentLinks;
+use Ngl5000\CashierConnect\Concerns\ManagesPerson;
+use Ngl5000\CashierConnect\Concerns\ManagesPayout;
+use Ngl5000\CashierConnect\Concerns\ManagesTerminals;
+use Ngl5000\CashierConnect\Concerns\ManagesTransfer;
 use Laravel\Cashier\Cashier;
 
 /**
  * Added to models for Stripe Connect functionality.
  *
- * @package Lanos\CashierConnect
+ * @package Ngl5000\CashierConnect
  */
 trait Billable
 {

@@ -1,19 +1,19 @@
 <?php
 
 
-namespace Lanos\CashierConnect\Concerns;
+namespace Ngl5000\CashierConnect\Concerns;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
-use Lanos\CashierConnect\Models\ConnectMapping;
+use Ngl5000\CashierConnect\Exceptions\AccountAlreadyExistsException;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Models\ConnectMapping;
 use Stripe\Account;
 use Stripe\Exception\ApiErrorException;
 
 /**
  * Manages a Stripe account for the model.
  *
- * @package Lanos\CashierConnect\Concerns
+ * @package Ngl5000\CashierConnect\Concerns
  */
 trait ManagesAccount
 {
@@ -30,7 +30,7 @@ trait ManagesAccount
      * Updates and returns the updated requirements against the stripe API for the mapping
      * @return ConnectMapping
      */
-    public function updateStripeStatus()
+    public function updateStripeStatus(): ConnectMapping
     {
         $account = $this->asStripeAccount();
 

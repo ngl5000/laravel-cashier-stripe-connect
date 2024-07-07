@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Lanos\CashierConnect\Concerns;
+namespace Ngl5000\CashierConnect\Concerns;
 
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
 use Stripe\Balance;
 use Stripe\Charge;
@@ -14,11 +14,10 @@ use Stripe\Transfer;
 /**
  * Manages balance for the Stripe connected account.
  *
- * @package Lanos\CashierConnect\Concerns
+ * @package Ngl5000\CashierConnect\Concerns
  */
 trait CanCharge
 {
-
     /**
      * Creates a direct charge
      * @param int $amount
@@ -30,7 +29,6 @@ trait CanCharge
      */
     public function createDirectCharge(int $amount, string $currencyToUse = null, array $options = []): PaymentIntent
     {
-
         $this->assertAccountExists();
 
         // Create payload for the transfer.
@@ -48,9 +46,7 @@ trait CanCharge
             }
         }
 
-
         return PaymentIntent::create($options, $this->stripeAccountOptions([],true));
-
     }
 
     /**
@@ -64,7 +60,6 @@ trait CanCharge
      */
     public function createDestinationCharge(int $amount, string $currencyToUse = null, array $options = [], bool $onBehalfOf = false): PaymentIntent
     {
-
         $this->assertAccountExists();
 
         // Create payload for the transfer.
@@ -90,16 +85,15 @@ trait CanCharge
         }
 
         return PaymentIntent::create($options, $this->stripeAccountOptions());
-
     }
-
 
     /**
      * @param $amount
      * @return float|int
      * @throws \Exception
      */
-    private function calculatePercentageFee($amount){
+    private function calculatePercentageFee($amount): float|int
+    {
         if($this->commission_rate < 100){
             return ($this->commission_rate / 100) * $amount;
         }else{
