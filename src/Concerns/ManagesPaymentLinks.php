@@ -1,9 +1,9 @@
 <?php
 
-namespace Lanos\CashierConnect\Concerns;
+namespace Ngl5000\CashierConnect\Concerns;
 
 use Illuminate\Support\Str;
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
 use Stripe\Collection;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentLink;
@@ -14,7 +14,7 @@ use Stripe\Terminal\Reader;
 /**
  * Manages terminals and locations for the connected account
  *
- * @package Lanos\CashierConnect\Concerns
+ * @package Ngl5000\CashierConnect\Concerns
  */
 trait ManagesPaymentLinks
 {
@@ -25,7 +25,8 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function createDirectPaymentLink($lineItems, $options): PaymentLink{
+    public function createDirectPaymentLink($lineItems, $options): PaymentLink
+    {
 
         $options = array_merge([
             'line_items' => $lineItems
@@ -49,8 +50,8 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function createDestinationPaymentLink(array $lineItems, array $options, bool $onBehalfOf = false): PaymentLink{
-
+    public function createDestinationPaymentLink(array $lineItems, array $options, bool $onBehalfOf = false): PaymentLink
+    {
         $options = array_merge([
             'line_items' => $lineItems,
             'transfer_data' => [
@@ -80,7 +81,8 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function getAllDirectPaymentLinks(): Collection{
+    public function getAllDirectPaymentLinks(): Collection
+    {
         $this->assertAccountExists();
         return PaymentLink::all([], $this->stripeAccountOptions([], true));
     }
@@ -94,7 +96,8 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function getSingleDestinationPaymentLink($id): PaymentLink{
+    public function getSingleDestinationPaymentLink($id): PaymentLink
+    {
         $this->assertAccountExists();
         return PaymentLink::retrieve($id, $this->stripeAccountOptions([], false));
     }
@@ -106,7 +109,8 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function updateDirectPaymentLink($id, $data): PaymentLink{
+    public function updateDirectPaymentLink($id, $data): PaymentLink
+    {
         $this->assertAccountExists();
         return PaymentLink::update($id, $data, $this->stripeAccountOptions([], true));
     }
@@ -118,7 +122,8 @@ trait ManagesPaymentLinks
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function updateDestinationPaymentLink($id, $data): PaymentLink{
+    public function updateDestinationPaymentLink($id, $data): PaymentLink
+    {
         $this->assertAccountExists();
         return PaymentLink::update($id, $data, $this->stripeAccountOptions([], false));
     }

@@ -1,19 +1,19 @@
 <?php
 
 
-namespace Lanos\CashierConnect;
+namespace Ngl5000\CashierConnect;
 
 
 use Exception;
-use Lanos\CashierConnect\Concerns\ManageConnectedPaymentMethods;
-use Lanos\CashierConnect\Concerns\ManageCustomer;
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Concerns\ManageConnectedPaymentMethods;
+use Ngl5000\CashierConnect\Concerns\ManageCustomer;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
 use Laravel\Cashier\Cashier;
 
 /**
  * Added to connected customer models to allow localized management of subscriptions
  *
- * @package Lanos\CashierConnect
+ * @package Ngl5000\CashierConnect
  */
 trait ConnectCustomer
 {
@@ -47,7 +47,7 @@ trait ConnectCustomer
             // A MODEL PROVIDED, LOOKUP ITS ACCOUNT ID
             $traits = class_uses($connectedAccount);
 
-            if(!in_array('Lanos\CashierConnect\Billable', $traits)){
+            if(!in_array('Ngl5000\CashierConnect\Billable', $traits)){
                 throw new Exception('The '.class_basename($connectedAccount).' model does not have the connect Billable trait.');
             }
 

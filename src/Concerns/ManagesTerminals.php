@@ -1,8 +1,8 @@
 <?php
 
-namespace Lanos\CashierConnect\Concerns;
+namespace Ngl5000\CashierConnect\Concerns;
 
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
 use Stripe\Collection;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Terminal\ConnectionToken;
@@ -12,7 +12,7 @@ use Stripe\Terminal\Reader;
 /**
  * Manages terminals and locations for the connected account
  *
- * @package Lanos\CashierConnect\Concerns
+ * @package Ngl5000\CashierConnect\Concerns
  */
 trait ManagesTerminals
 {
@@ -24,7 +24,8 @@ trait ManagesTerminals
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function addTerminalLocation(array $data, bool $direct = false): Location{
+    public function addTerminalLocation(array $data, bool $direct = false): Location
+    {
         $this->assertAccountExists();
         return Location::create($data, $this->stripeAccountOptions([], $direct));
     }
@@ -36,7 +37,8 @@ trait ManagesTerminals
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function getTerminalLocations(array $params, bool $direct = false): Collection{
+    public function getTerminalLocations(array $params, bool $direct = false): Collection
+    {
         $this->assertAccountExists();
         return Location::all($params, $this->stripeAccountOptions([], $direct));
     }
@@ -49,7 +51,8 @@ trait ManagesTerminals
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function registerTerminalReader(array $data, bool $direct = false): Reader{
+    public function registerTerminalReader(array $data, bool $direct = false): Reader
+    {
         $this->assertAccountExists();
         return Reader::create($data, $this->stripeAccountOptions([], $direct));
     }
@@ -61,7 +64,8 @@ trait ManagesTerminals
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function getTerminalReaders(array $params = [], bool $direct = false): Collection{
+    public function getTerminalReaders(array $params = [], bool $direct = false): Collection
+    {
         $this->assertAccountExists();
         return Reader::all($params, $this->stripeAccountOptions([], $direct));
     }
@@ -73,7 +77,8 @@ trait ManagesTerminals
      * @throws AccountNotFoundException
      * @throws ApiErrorException
      */
-    public function createConnectionToken(string $location, bool $direct = false): ConnectionToken{
+    public function createConnectionToken(string $location, bool $direct = false): ConnectionToken
+    {
         $this->assertAccountExists();
         return ConnectionToken::create([
             "location" => $location

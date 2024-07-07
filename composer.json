@@ -1,5 +1,5 @@
 {
-    "name": "lanos/laravel-cashier-stripe-connect",
+    "name": "ngl5000/laravel-cashier-stripe-connect",
     "description": "Adds Stripe Connect functionality to Laravel's main billing package, Cashier.",
 	"keywords": ["laravel", "stripe", "stripe-connect", "billing"],
     "type": "library",
@@ -19,19 +19,19 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Robert Lane",
-            "email": "rob@updev.agency"
+            "name": "Numerous",
+            "email": "ngl5000@gmail.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Lanos\\CashierConnect\\": "src/"
+            "Ngl5000\\CashierConnect\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Lanos\\CashierConnect\\CashierConnectServiceProvider"
+                "Ngl5000\\CashierConnect\\CashierConnectServiceProvider"
             ]
         }
     },

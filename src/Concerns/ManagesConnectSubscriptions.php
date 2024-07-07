@@ -1,13 +1,13 @@
 <?php
 
-namespace Lanos\CashierConnect\Concerns;
+namespace Ngl5000\CashierConnect\Concerns;
 
 use Exception;
 use Illuminate\Support\Facades\Date;
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Support\Str;
-use Lanos\CashierConnect\Models\ConnectSubscription;
-use Lanos\CashierConnect\Models\ConnectSubscriptionItem;
+use Ngl5000\CashierConnect\Models\ConnectSubscription;
+use Ngl5000\CashierConnect\Models\ConnectSubscriptionItem;
 use Stripe\Balance;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
@@ -18,7 +18,7 @@ use Stripe\Transfer;
 /**
  * Manages Customers that belong to a connected account (not the platform account)
  *
- * @package Lanos\CashierConnect\Concerns
+ * @package Ngl5000\CashierConnect\Concerns
  */
 trait ManagesConnectSubscriptions
 {
@@ -122,7 +122,7 @@ trait ManagesConnectSubscriptions
         // IT IS A CUSTOMER TRAIT MODEL
         $traits = class_uses($customer);
 
-        if (!in_array('Lanos\CashierConnect\ConnectCustomer', $traits)) {
+        if (!in_array('Ngl5000\CashierConnect\ConnectCustomer', $traits)) {
             throw new Exception('The '.class_basename($customer).' model does not have the connect ConnectCustomer trait.');
         }
 

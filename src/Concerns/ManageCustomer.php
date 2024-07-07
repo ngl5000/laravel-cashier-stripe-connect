@@ -1,13 +1,13 @@
 <?php
 
-namespace Lanos\CashierConnect\Concerns;
+namespace Ngl5000\CashierConnect\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Lanos\CashierConnect\Models\ConnectCustomer;
-use Lanos\CashierConnect\Exceptions\AccountAlreadyExistsException;
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
-use Lanos\CashierConnect\Models\ConnectMapping;
+use Ngl5000\CashierConnect\Models\ConnectCustomer;
+use Ngl5000\CashierConnect\Exceptions\AccountAlreadyExistsException;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Models\ConnectMapping;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
 
@@ -150,12 +150,10 @@ trait ManageCustomer
      */
     private function getHostIDField(ConnectMapping $connectedAccount): string
     {
-
         if($connectedAccount->model_id){
             return 'model_id';
         }else{
             return 'model_uuid';
         }
-
     }
 }

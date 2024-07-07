@@ -1,15 +1,15 @@
 <?php
 
-namespace Lanos\CashierConnect;
+namespace Ngl5000\CashierConnect;
 
 use Illuminate\Support\ServiceProvider;
-use Lanos\CashierConnect\Console\ConnectWebhook;
+use Ngl5000\CashierConnect\Console\ConnectWebhook;
 use Laravel\Cashier\Cashier;
 
 /**
  * Service provider for the package.
  *
- * @package Lanos\CashierConnect\Providers
+ * @package Ngl5000\CashierConnect\Providers
  */
 class CashierConnectServiceProvider extends ServiceProvider
 {
@@ -36,10 +36,8 @@ class CashierConnectServiceProvider extends ServiceProvider
 
     /**
      * Register the package's publishable resources.
-     *
-     * @return void
      */
-    protected function initializePublishing()
+    protected function initializePublishing(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -53,10 +51,8 @@ class CashierConnectServiceProvider extends ServiceProvider
 
     /**
      * Register the package's console commands.
-     *
-     * @return void
      */
-    protected function initializeCommands()
+    protected function initializeCommands(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -67,10 +63,8 @@ class CashierConnectServiceProvider extends ServiceProvider
 
     /**
      * Register the package's console commands.
-     *
-     * @return void
      */
-    protected function setupRoutes()
+    protected function setupRoutes(): void
     {
         $this->loadRoutesFrom(__DIR__.'/../routes/webhook.php');
 
@@ -78,10 +72,8 @@ class CashierConnectServiceProvider extends ServiceProvider
 
     /**
      * Register the package's config.
-     *
-     * @return void
      */
-    protected function setupConfig()
+    protected function setupConfig(): void
     {
         $this->publishes([
             __DIR__.'/../config/cashierconnect.php' => config_path('cashierconnect.php'),

@@ -1,8 +1,10 @@
 <?php
 
-namespace Lanos\CashierConnect\Http\Middleware;
+namespace Ngl5000\CashierConnect\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\WebhookSignature;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -18,7 +20,7 @@ class VerifyConnectWebhook
      *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         try {
             WebhookSignature::verifyHeader(

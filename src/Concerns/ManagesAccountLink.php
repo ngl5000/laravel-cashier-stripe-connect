@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Lanos\CashierConnect\Concerns;
+namespace Ngl5000\CashierConnect\Concerns;
 
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Stripe\Account;
 use Stripe\AccountLink;
@@ -12,7 +12,7 @@ use Stripe\Exception\ApiErrorException;
 /**
  * Manages links for the Stripe connected account.
  *
- * @package Lanos\CashierConnect\Concerns
+ * @package Ngl5000\CashierConnect\Concerns
  */
 trait ManagesAccountLink
 {
@@ -78,7 +78,7 @@ trait ManagesAccountLink
      * @return RedirectResponse
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function redirectToAccountOnboarding(string $return_url, string $refresh_url, array $options= [])
+    public function redirectToAccountOnboarding(string $return_url, string $refresh_url, array $options= []): RedirectResponse
     {
         return new RedirectResponse($this->accountOnboardingUrl($return_url, $refresh_url, $options));
     }

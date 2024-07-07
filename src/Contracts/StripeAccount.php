@@ -1,16 +1,16 @@
 <?php
 
 
-namespace Lanos\CashierConnect\Contracts;
+namespace Ngl5000\CashierConnect\Contracts;
 
-use Lanos\CashierConnect\Exceptions\AccountNotFoundException;
+use Ngl5000\CashierConnect\Exceptions\AccountNotFoundException;
 use Stripe\Account;
 use Stripe\Exception\ApiErrorException;
 
 /**
  * Stripe account.
  *
- * @package Lanos\CashierConnect\Contracts
+ * @package Ngl5000\CashierConnect\Contracts
  */
 interface StripeAccount
 {

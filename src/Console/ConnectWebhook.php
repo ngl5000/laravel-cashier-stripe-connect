@@ -1,6 +1,6 @@
 <?php
 
-namespace Lanos\CashierConnect\Console;
+namespace Ngl5000\CashierConnect\Console;
 
 use Illuminate\Console\Command;
 use Laravel\Cashier\Cashier;

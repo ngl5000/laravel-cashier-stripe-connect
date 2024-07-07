@@ -1,13 +1,13 @@
 <?php
 
-namespace Lanos\CashierConnect\Http\Controllers;
+namespace Ngl5000\CashierConnect\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
-use Lanos\CashierConnect\Events\ConnectWebhookHandled;
-use Lanos\CashierConnect\Events\ConnectWebhookReceived;
-use Lanos\CashierConnect\Http\Middleware\VerifyConnectWebhook;
+use Ngl5000\CashierConnect\Events\ConnectWebhookHandled;
+use Ngl5000\CashierConnect\Events\ConnectWebhookReceived;
+use Ngl5000\CashierConnect\Http\Middleware\VerifyConnectWebhook;
 use Stripe\Stripe;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +32,7 @@ class WebhookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handleWebhook(Request $request)
+    public function handleWebhook(Request $request): Response
     {
         $payload = json_decode($request->getContent(), true);
         $method = 'handle'.Str::studly(str_replace('.', '_', $payload['type']));
@@ -58,7 +58,7 @@ class WebhookController extends Controller
      * @param  array  $parameters
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function successMethod($parameters = [])
+    protected function successMethod($parameters = []): Response
     {
         return new Response('Webhook Handled', 200);
     }
@@ -69,7 +69,7 @@ class WebhookController extends Controller
      * @param  array  $parameters
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function missingMethod($parameters = [])
+    protected function missingMethod($parameters = []): Response
     {
         return new Response;
     }
@@ -80,7 +80,7 @@ class WebhookController extends Controller
      * @param  int  $retries
      * @return void
      */
-    protected function setMaxNetworkRetries($retries = 3)
+    protected function setMaxNetworkRetries($retries = 3): void
     {
         Stripe::setMaxNetworkRetries($retries);
     }

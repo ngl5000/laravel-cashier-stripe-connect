@@ -1,9 +1,9 @@
 <?php
 
-namespace Lanos\CashierConnect\Models;
+namespace Ngl5000\CashierConnect\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Lanos\CashierConnect\StripeEntity;
+use Ngl5000\CashierConnect\StripeEntity;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Subscription;
 
