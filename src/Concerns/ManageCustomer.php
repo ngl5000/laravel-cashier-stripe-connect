@@ -14,16 +14,18 @@ use Stripe\Exception\ApiErrorException;
 trait ManageCustomer
 {
     /**
-     * @return mixed
+     * Load the customer mapping coming from our customer model
      */
-    public function stripeCustomerMapping(): BelongsTo
+    public function stripeCustomerMapping(Model $connectedAccountBillableModel): BelongsTo
     {
-        return $this->belongsTo(ConnectCustomer::class, $this->primaryKey, $this->getLocalIDField())->where('model', '=', get_class($this));
+        return $this->belongsTo(ConnectCustomer::class, $this->primaryKey, $this->getLocalIDField())
+                    ->where('model', '=', get_class($this))
+                    ->where('stripe_account_id', '=', $connectedAccountBillableModel->stripeAccountId());
     }
 
     /**
      * Retrieve the Stripe account ID.
-     *
+     * From an already loaded stripe customer mapping
      * @return string|null
      */
     public function stripeAccountId(): ?string
@@ -33,10 +35,10 @@ trait ManageCustomer
 
     /**
      * Retrieve the Stripe customer ID.
-     *
+     * From an already loaded stripe customer mapping
      * @return string|null
      */
-    public function stripeCustomerId(?ConnectMapping $connectedAccount = null): ?string
+    public function stripeCustomerId(): ?string
     {
         return $this->stripeCustomerMapping->stripe_customer_id;
     }
@@ -45,12 +47,12 @@ trait ManageCustomer
      * Checks if the model exists as a stripe customer
      * @return mixed
      */
-    public function hasCustomerRecord(ConnectMapping $connectedAccount): bool
+    public function hasCustomerRecord(?Model $connectedAccountBillableModel = null): bool
     {
         $query = $this->stripeCustomerMapping();
 
-        if ($connectedAccount) {
-            $query->where('stripe_account_id', $connectedAccount->stripeAccountId());
+        if ($connectedAccountBillableModel) {
+            $query->where('stripe_account_id', $connectedAccountBillableModel->stripeAccountId());
         }
     
         return $query->exists();
@@ -65,19 +67,19 @@ trait ManageCustomer
      * @throws AccountAlreadyExistsException
      * @throws AccountNotFoundException
      */
-    public function createStripeCustomer(ConnectMapping $connectedAccount, array $customerData = []): Customer
+    public function createStripeCustomer(Model $connectedAccountBillableModel, array $customerData = []): Customer
     {
         // Check if model already has a connected Stripe account.
-        if ($this->hasCustomerRecord($connectedAccount)) {
+        if ($this->hasCustomerRecord($connectedAccountBillableModel)) {
             throw new AccountAlreadyExistsException('Customer account already exists.');
         }
 
-        $customer = Customer::create($customerData, $this->stripeAccountOptions($connectedAccount));
+        $customer = Customer::create($customerData, $this->stripeAccountOptions($connectedAccountBillableModel));
 
         // Save the id.
         $this->stripeCustomerMapping()->create([
             "stripe_customer_id" => $customer->id,
-            "stripe_account_id" => $connectedAccount->stripeAccountId(),
+            "stripe_account_id" => $connectedAccountBillableModel->stripeAccountId(),
             "model" => get_class($this),
             $this->getLocalIDField() => $this->{$this->primaryKey}
         ]);
@@ -85,29 +87,6 @@ trait ManageCustomer
         $this->save();
 
         return $customer;
-    }
-
-    /**
-     * Returns the parent model that the customer belongs to
-     * You should really be relating these yourself using foreign indexes and eloquent relationships
-     * This is only done this way for the purposes of the plugin and the dynamic mapping
-     * @return Model
-     */
-    private function retrieveHostConnectedAccount(): Model
-    {
-        $connectedAccount = ConnectMapping::where([
-            ['stripe_account_id', '=', $this->stripeAccountId()]
-        ])->first();
-
-        if (!$connectedAccount) {
-            throw new AccountNotFoundException('Connected account not found.');
-        }
-
-        $model = $connectedAccount->model;
-
-        $modelId = $this->getHostIDField($connectedAccount);
-
-        return $model::find($connectedAccount->$modelId);
     }
 
     /**
