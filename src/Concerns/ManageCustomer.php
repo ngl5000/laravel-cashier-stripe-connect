@@ -24,32 +24,35 @@ trait ManageCustomer
     }
 
     /**
-     * Retrieve the Stripe account ID.
+     * Retrieve the Stripe account ID from the Customer
      * From an already loaded stripe customer mapping
+     * @param Model $connectedAccountBillableModel
      * @return string|null
      */
-    public function stripeAccountId(): ?string
+    public function stripeAccountId(Model $connectedAccountBillableModel): ?string
     {
-        return $this->stripeCustomerMapping->stripe_account_id;
+        $mapping = $this->stripeCustomerMapping($connectedAccountBillableModel)->first();
+        return $mapping ? $mapping->stripe_account_id : null;
     }
 
     /**
-     * Retrieve the Stripe customer ID.
+     * Retrieve the Stripe customer ID frm the customer
      * From an already loaded stripe customer mapping
+     * @param Model $connectedAccountBillableModel
      * @return string|null
      */
-    public function stripeCustomerId(): ?string
+    public function stripeCustomerId(Model $connectedAccountBillableModel): ?string
     {
-        return $this->stripeCustomerMapping->stripe_customer_id;
+        $mapping = $this->stripeCustomerMapping($connectedAccountBillableModel)->first();
+        return $mapping ? $mapping->stripe_customer_id : null;
     }
-
     /**
      * Checks if the model exists as a stripe customer
      * @return mixed
      */
     public function hasCustomerRecord(?Model $connectedAccountBillableModel = null): bool
     {
-        $query = $this->stripeCustomerMapping();
+        $query = $this->stripeCustomerMapping($connectedAccountBillableModel);
 
         if ($connectedAccountBillableModel) {
             $query->where('stripe_account_id', $connectedAccountBillableModel->stripeAccountId());
@@ -76,8 +79,7 @@ trait ManageCustomer
 
         $customer = Customer::create($customerData, $this->stripeAccountOptions($connectedAccountBillableModel));
 
-        // Save the id.
-        $this->stripeCustomerMapping()->create([
+        ConnectCustomer::create([
             "stripe_customer_id" => $customer->id,
             "stripe_account_id" => $connectedAccountBillableModel->stripeAccountId(),
             "model" => get_class($this),
@@ -95,16 +97,19 @@ trait ManageCustomer
      * @return Customer
      * @throws AccountNotFoundException|ApiErrorException
      */
-    public function deleteStripeCustomer(): Customer
+    public function deleteStripeCustomer(Model $connectedAccountBillableModel): Customer
     {
-        $this->assetCustomerExists();
+        $customerId = $this->stripeCustomerId($connectedAccountBillableModel);
+        if (!$customerId) {
+            throw new AccountNotFoundException('Customer record not found.');
+        }
 
         // Process account delete.
-        $customer = Customer::retrieve($this->stripeCustomerId(), $this->stripeAccountOptions($this->retrieveHostConnectedAccount()));
+        $customer = Customer::retrieve($customerId, $this->stripeAccountOptions($connectedAccountBillableModel));
         $customer->delete();
 
         // Wipe account id reference from model.
-        $this->stripeCustomerMapping()->delete();
+        $this->stripeCustomerMapping($connectedAccountBillableModel)->delete();
 
         return $customer;
     }
